@@ -14,5 +14,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   return view('welcome');
 });
+
+Route::get('helloword', function () {
+    //dd('helloword');
+    return '<h1>hello Word Vanessa <h1>';
+ });
+
+ Route::get('users', function () {
+    $users = App\User::all()->take(10);
+    foreach($users as $user){
+      $user->age = date_diff(date_create($user->birthdate), date_create(now()))->format('%y'); //es la edad
+      $weekDiff = strftime("%W", now()->getTimestamp()) - strftime("%W", $user->created_at->getTimestamp()); //numero de semanas
+      $user->created = $weekDiff;
+   }
+    
+    dd($users);
+ });
+
+ Route::get('user/{id}', function () {
+    dd(App\User::findOrFail($id));
+ });

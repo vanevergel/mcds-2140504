@@ -16,4 +16,9 @@ class Category extends Model
         'name', 'image', 'description',
     ];
 
+    public function games() 
+    {
+        return $this->hasMany('App\Game');
+    }
+
 }
