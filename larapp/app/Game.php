@@ -13,14 +13,21 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'image', 'description', 'user_id', 'category_id', 'slider', 'price'
+        'name',
+        'image',
+        'description',
+        'user_id',
+        'category_id',
+        'slider',
+        'price'
     ];
 
-    public function user () {
+    public function user() {
         return $this->belongsTo('App\User');
     }
 
-    public function category () {
+    public function category()
+    {
         return $this->belongsTo('App\Category');
     }
 
