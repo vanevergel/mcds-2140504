@@ -1,35 +1,37 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
-                <img src="{{ asset('imgs/bg-register.svg') }}" width="300px" class="my-2 img-top-card">
-                <div class="card-header text-uppercase text-center">
-                    <h5>
-                        <i class="fa fa-user-edit"></i> 
-                        @lang('general.title-register')
-                    </h5>
-                </div>
+@section('title', 'Crear Usuario')
 
-                {{-- <div class="row mt-4">
-                    <div class="col-md-8 offset-md-2">
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                              @foreach ($errors->all() as $message)
-                                    <li>{{ $message }}</li>
-                            @endforeach
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                        @endif
-                    </div>
-                </div> --}}
-            
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+@section('content')
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<h1>
+				<i class="fa fa-plus"></i> 
+				Adicionar Usuarios
+			</h1>
+			<hr>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('home') }}">
+                        <i class="fa fa-clipboard-list"></i>  
+                        Escritorio
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('users.index') }}">
+                        <i class="fa fa-users"></i>  
+                         Módulo Usuarios
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fa fa-plus"></i> 
+                    Adicionar Usuarios
+                </li>
+              </ol>
+            </nav>
+
+			<form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                                 <input id="fullname" type="text" class="form-control @error('fullname') is-invalid @enderror" name="fullname" value="{{ old('fullname') }}" placeholder="@lang('general.label-fullname')" autofocus>
@@ -73,7 +75,7 @@
 
                         <div class="form-group">
                                 <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
-                                    <option value="">@lang('general.select-value')</option>
+                                    <option value="">Seleccione el Genero...</option>
                                     <option value="Female" @if(old('gender') == 'Female') selected @endif>@lang('general.select-female')</option>
                                     <option value="Male" @if(old('gender') == 'Male') selected @endif>@lang('general.select-male')</option>
                                 </select>
@@ -96,6 +98,24 @@
                         </div>
 
                         <div class="form-group">
+                                <div class="text-center my-3">
+                                    <img src="{{ asset('imgs/no-photo.png') }}" class="img-thumbnail" id="preview" width="120px">
+                                </div>
+                                <div class="custom-file">
+                                   <input type="file" class="custom-file-input @error('photo') is-invalid @enderror" id="photo" name="photo" accept="image/*">
+                                   <label class="custom-file-label" for="customFile"> 
+                                   	 <i class="fa fa-upload"></i> 
+                                   	 Foto
+                                   </label>
+                                @error('photo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                </div>    
+                        </div>
+
+                        <div class="form-group">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="@lang('general.label-password')">
 
                                 @error('password')
@@ -111,14 +131,11 @@
 
                         <div class="form-group">
                                 <button type="submit" class="btn btn-larapp btn-block text-uppercase">
-                                    @lang('general.btn-register')
+                                    Adicionar
                                     <i class="fa fa-save"></i> 
                                 </button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+		</div>
+	</div>
 @endsection
